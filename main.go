@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"time"
+	"strings"
 )
 
 func main() {
@@ -33,17 +34,34 @@ func main() {
 }
 
 func doActionWithLoadingAnimation(action string) {
+	fmt.Printf("%s:\n", action)
+
+	// Define the loading animation
 	animation := []string{
 		"⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷",
 	}
 
-	fmt.Printf("%s ", action)
-
+	// Start the progress bar
+	fmt.Print("[")
 	for i := 0; i < 40; i++ {
-		fmt.Print(animation[i%len(animation)])
-		time.Sleep(100 * time.Millisecond)
-		fmt.Print("\b")
+		fmt.Print(" ")
+	}
+	fmt.Print("]\r[")
+	for i := 0; i < 40; i++ {
+		fmt.Print(" ")
+	}
+	fmt.Print("]\r")
+
+	// Loop to update the progress bar and display the loading animation
+	for i := 0; i < 100; i++ {
+		index := i % len(animation)
+		if i < 0 || i / 2 < 0 || 39-i/2 < 0 {
+			continue
+		}
+		fmt.Printf("\033[1;34m%s\033[0m[%-40s]%3d%%\r", animation[index], strings.Repeat("=", i/2)+">"+strings.Repeat(" ", 39-i/2), i)
+		time.Sleep(30 * time.Millisecond)
 	}
 
-	fmt.Println(" Done!")
+	// Print the "Done!" message
+	fmt.Println("\n\033[1;32mDone!\033[0m")
 }
