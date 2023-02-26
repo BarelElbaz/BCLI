@@ -33,7 +33,7 @@ func main() {
 	}
 }
 
-func doActionWithLoadingAnimation(action string) {
+func doActionWithLoadingAnimation(action string) (bool) {
 	fmt.Printf("%s:\n", action)
 
 	// Define the loading animation
@@ -64,4 +64,5 @@ func doActionWithLoadingAnimation(action string) {
 
 	// Print the "Done!" message
 	fmt.Println("\n\033[1;32mDone!\033[0m")
+	return true
 }
