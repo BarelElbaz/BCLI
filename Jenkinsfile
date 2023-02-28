@@ -1,3 +1,5 @@
+@Library('slib@main')_
+
 pipeline{
     agent any
 
@@ -8,14 +10,12 @@ pipeline{
     stages{
         stage("Build"){
             steps{
-                echo(" Building bcli ")
-                sh "go build -o bcli"
+                goBuild("bcli")
             }
         }
         stage("Test"){
             steps{
-                echo(" Testing bcli")
-                sh "go test"
+                goTest()
             }
         }
     }
